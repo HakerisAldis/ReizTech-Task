@@ -1,0 +1,8 @@
+.listItem {
+  background-color: #d7fbcf;
+  height: 4rem;
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
