@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.css';
 import Grid from '@mui/material/Grid';
 import Country from '../../types/country';
+import { shadows } from '@mui/system';
 
 interface Props {
   country: Country;

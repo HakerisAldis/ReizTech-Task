@@ -5,4 +5,9 @@
   font-weight: bold;
   padding-left: 1rem;
   padding-right: 1rem;
+  transition: box-shadow .3s;
+}
+
+.listItem:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
