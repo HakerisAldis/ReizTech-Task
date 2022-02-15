@@ -1,4 +1,3 @@
-import React from 'react';
 import ListItemLoading from '../ListItem/ListItemLoading';
 
 const ListLoading = () => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './styles.module.css';
 import Grid from '@mui/material/Grid';
 import { LinearProgress } from '@mui/material';

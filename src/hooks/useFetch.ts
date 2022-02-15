@@ -7,7 +7,6 @@ interface State<T> {
 
 type Cache<T> = { [url: string]: T }
 
-// discriminated union type
 type Action<T> =
   | { type: 'loading' }
   | { type: 'fetched'; payload: T }
@@ -16,7 +15,6 @@ type Action<T> =
 function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
   const cache = useRef<Cache<T>>({});
 
-  // Used to prevent state update if the component is unmounted
   const cancelRequest = useRef<boolean>(false);
 
   const initialState: State<T> = {
@@ -24,7 +22,6 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
     data: undefined,
   };
 
-  // Keep state logic separated
   const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
     switch(action.type) {
     case 'loading':
@@ -41,13 +38,11 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
-    // Do nothing if the url is not given
     if(!url) return;
 
     const fetchData = async () => {
       dispatch({ type: 'loading' });
 
-      // If a cache exists for this url, return it
       if(cache.current[url]) {
         dispatch({ type: 'fetched', payload: cache.current[url] });
         return;
@@ -73,8 +68,6 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
 
     void fetchData();
 
-    // Use the cleanup function for avoiding a possibly...
-    // ...state update after the component was unmounted
     return () => {
       cancelRequest.current = true;
     };

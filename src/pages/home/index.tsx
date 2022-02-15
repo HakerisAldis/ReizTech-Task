@@ -3,14 +3,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useEffect, useState } from 'react';
 import List from '../../components/List';
 import ListLoading from '../../components/List/ListLoading';
-import { FILTER_OPTION } from '../../constants/filterOptions';
+import { SORT_OPTION } from '../../constants/sortOptions';
 import useFetch from '../../hooks/useFetch';
 import Country from '../../types/country';
 
 const Home = () => {
   const { data, error } = useFetch<Country[]>('https://restcountries.com/v2/all?fields=name,region,area');
   const [countries, setCountries] = useState<Country[]>([]);
-  const [filterOption, setFilterOption] = useState(FILTER_OPTION.NONE);
+  const [sortOption, setSortOption] = useState(SORT_OPTION.NONE);
   const [isLoading, setIsLoading] = useState(true);
 
   const [page, setPage] = useState(1);
@@ -41,13 +41,13 @@ const Home = () => {
     setPage(newPage);
   };
 
-  function handleFilter(event: SelectChangeEvent) {
-    setFilterOption(event.target.value);
+  function handleSort(event: SelectChangeEvent) {
+    setSortOption(event.target.value);
     switch (event.target.value) {
-    case FILTER_OPTION.ASCENDING:
+    case SORT_OPTION.ASCENDING:
       countries.sort((a, b): number => a.name > b.name ? 1 : -1);
       break;
-    case FILTER_OPTION.DESCENDING:
+    case SORT_OPTION.DESCENDING:
       countries.sort((a, b): number => a.name > b.name ? -1 : 1);
       break;
     }
@@ -73,7 +73,7 @@ const Home = () => {
 
   function handleRevert() {
     if(data) {
-      setFilterOption(FILTER_OPTION.NONE);
+      setSortOption(SORT_OPTION.NONE);
       setCountries([...data]);
       setPage(1);
     }
@@ -98,11 +98,11 @@ const Home = () => {
         </Box>
         <Box>
           <FormControl sx={{ minWidth: 130 }}>
-            <InputLabel htmlFor="filter-select">Filter</InputLabel>
-            <Select value={filterOption} label="Filter" id="filter-select" onChange={handleFilter}>
-              <ListSubheader><i>Filter by name</i></ListSubheader>
-              <MenuItem value={FILTER_OPTION.ASCENDING}>Ascending</MenuItem>
-              <MenuItem value={FILTER_OPTION.DESCENDING}>Descending</MenuItem>
+            <InputLabel htmlFor="sort-select">Sort</InputLabel>
+            <Select value={sortOption} label="Sort" id="sort-select" onChange={handleSort}>
+              <ListSubheader><i>Sort by name</i></ListSubheader>
+              <MenuItem value={SORT_OPTION.ASCENDING}>Ascending</MenuItem>
+              <MenuItem value={SORT_OPTION.DESCENDING}>Descending</MenuItem>
             </Select>
           </FormControl>
         </Box>
